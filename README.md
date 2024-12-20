@@ -37,43 +37,43 @@ Markdown Downloader is a powerful MCP (Model Context Protocol) server that allow
 
 ## Tools and Usage
 
-### 1. Download Markdown
+### 1. Set Download Directory
+
+Change the download directory:
+
+```bash
+use set_download_directory /path/to/your/local/download/folder
+```
+
+- Validates directory exists and is writable
+- Persists the configuration for future use
+
+### 2. Download Markdown
 
 Download a webpage as a markdown file:
 
 ```bash
-use_mcp_tool markdown-downloader download_markdown '{"url": "https://example.com/blog-post"}'
+use tool download_markdown https://example.com/blog-post
 ```
 
 - The URL will be prepended with `r.jina.ai`
 - Filename format: `{sanitized-url}-{date}.md`
 - Saved in the configured download directory
 
-### 2. List Downloaded Files
+### 3. List Downloaded Files
 
 List all downloaded markdown files:
 
 ```bash
-use_mcp_tool markdown-downloader list_downloaded_files
+use list_downloaded_files
 ```
-
-### 3. Set Download Directory
-
-Change the download directory:
-
-```bash
-use_mcp_tool markdown-downloader set_download_directory '{"directory": "/path/to/your/download/folder"}'
-```
-
-- Validates directory exists and is writable
-- Persists the configuration for future use
 
 ### 4. Get Download Directory
 
 Retrieve the current download directory:
 
 ```bash
-use_mcp_tool markdown-downloader get_download_directory
+use get_download_directory
 ```
 
 ## Configuration
