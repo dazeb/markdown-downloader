@@ -34,6 +34,25 @@ Markdown Downloader is a powerful MCP (Model Context Protocol) server that allow
    ```bash
    npm run build
    ```
+## Manually Add Server to Cline/Roo-Cline MCP Settings file  
+
+```
+{
+  "mcpServers": {
+    "markdown-downloader": {
+      "command": "node",
+      "args": [
+        "/home/user/Documents/Cline/MCP/markdown-downloader/build/index.js"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "download_markdown",
+        "set_download_directory"
+      ]
+    }
+  }
+}
+```
 
 ## Tools and Usage
 
