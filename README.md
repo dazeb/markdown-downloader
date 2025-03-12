@@ -4,6 +4,10 @@
 
 Markdown Downloader is a powerful MCP (Model Context Protocol) server that allows you to download webpages as markdown files with ease. Leveraging the r.jina.ai service, this tool provides a seamless way to convert web content into markdown format.
 
+<a href="https://glama.ai/mcp/servers/jrki7zltg7">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/jrki7zltg7/badge" alt="Markdown Downloader MCP server" />
+</a>
+
 ## Features
 
 - 🌐 Download webpages as markdown using r.jina.ai
@@ -34,6 +38,7 @@ Markdown Downloader is a powerful MCP (Model Context Protocol) server that allow
    ```bash
    npm run build
    ```
+
 ## Manually Add Server to Cline/Roo-Cline MCP Settings file  
 
 ```
