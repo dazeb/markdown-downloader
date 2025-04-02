@@ -1,5 +1,7 @@
 # Markdown Downloader MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@dazeb/markdown-downloader)](https://smithery.ai/server/@dazeb/markdown-downloader)
+
 ## Overview
 
 Markdown Downloader is a powerful MCP (Model Context Protocol) server that allows you to download webpages as markdown files with ease. Leveraging the r.jina.ai service, this tool provides a seamless way to convert web content into markdown format.
@@ -22,6 +24,16 @@ Markdown Downloader is a powerful MCP (Model Context Protocol) server that allow
 - npm (Node Package Manager)
 
 ## Installation
+
+### Installing via Smithery
+
+To install Markdown Downloader for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@dazeb/markdown-downloader):
+
+```bash
+npx -y @smithery/cli install @dazeb/markdown-downloader --client claude
+```
+
+### Installing manually
 
 1. Clone the repository:
    ```bash
