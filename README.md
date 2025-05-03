@@ -1,5 +1,7 @@
 [![MseeP Badge](https://mseep.net/pr/dazeb-markdown-downloader-badge.jpg)](https://mseep.ai/app/dazeb-markdown-downloader)
 
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/e85a9805-464e-46bd-a953-ccac0c4a5129)
+
 # Markdown Downloader MCP Server
 
 [![smithery badge](https://smithery.ai/badge/@dazeb/markdown-downloader)](https://smithery.ai/server/@dazeb/markdown-downloader)
