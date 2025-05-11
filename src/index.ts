@@ -10,10 +10,23 @@ import {
 import axios from 'axios';
 import fs from 'fs-extra';
 import path from 'path';
+import os from 'os';
 
 // Configuration management
-const CONFIG_DIR = path.join(process.env.HOME || '/tmp', '.config', 'markdown-downloader');
+// Use platform-specific paths for configuration
+const homedir = os.homedir();
+const configBasePath = process.platform === 'win32'
+  ? path.join(process.env.APPDATA || homedir, 'markdown-downloader')
+  : path.join(homedir, '.config', 'markdown-downloader');
+const CONFIG_DIR = configBasePath;
 const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json');
+
+// Default download directory based on platform
+const getDefaultDownloadDir = () => {
+  return process.platform === 'win32'
+    ? path.join(homedir, 'Documents', 'markdown-downloads')
+    : path.join(homedir, '.markdown-downloads');
+};
 
 interface MarkdownDownloaderConfig {
   downloadDirectory: string;
@@ -23,9 +36,10 @@ function getConfig(): MarkdownDownloaderConfig {
   try {
     fs.ensureDirSync(CONFIG_DIR);
     if (!fs.existsSync(CONFIG_FILE)) {
-      // Default to home directory if no config exists
+      // Default to platform-specific directory if no config exists
+      const defaultDownloadDir = getDefaultDownloadDir();
       const defaultConfig: MarkdownDownloaderConfig = {
-        downloadDirectory: path.join(process.env.HOME || '/tmp', '.markdown-downloads')
+        downloadDirectory: defaultDownloadDir
       };
       fs.writeJsonSync(CONFIG_FILE, defaultConfig);
       fs.ensureDirSync(defaultConfig.downloadDirectory);
@@ -35,8 +49,9 @@ function getConfig(): MarkdownDownloaderConfig {
   } catch (error) {
     console.error('Error reading config:', error);
     // Fallback to default
+    const defaultDownloadDir = getDefaultDownloadDir();
     return {
-      downloadDirectory: path.join(process.env.HOME || '/tmp', '.markdown-downloads')
+      downloadDirectory: defaultDownloadDir
     };
   }
 }
@@ -83,7 +98,7 @@ class MarkdownDownloaderServer {
     );
 
     this.setupToolHandlers();
-    
+
     // Error handling
     this.server.onerror = (serverError: unknown) => console.error('[MCP Error]', serverError);
     process.on('SIGINT', async () => {
@@ -172,10 +187,10 @@ class MarkdownDownloaderServer {
       if (request.params.name === 'download_markdown') {
         const url = request.params.arguments?.url;
         const subdirectory = request.params.arguments?.subdirectory;
-        
+
         if (!url || typeof url !== 'string') {
           throw new McpError(
-            ErrorCode.InvalidParams, 
+            ErrorCode.InvalidParams,
             'A valid URL must be provided'
           );
         }
@@ -183,10 +198,10 @@ class MarkdownDownloaderServer {
         try {
           // Get current download directory
           const config = getConfig();
-          
+
           // Prepend r.jina.ai to the URL
           const jinaUrl = `https://r.jina.ai/${url}`;
-          
+
           // Download markdown
           const response = await axios.get(jinaUrl, {
             headers: {
@@ -263,10 +278,10 @@ class MarkdownDownloaderServer {
       // Set download directory
       if (request.params.name === 'set_download_directory') {
         const directory = request.params.arguments?.directory;
-        
+
         if (!directory || typeof directory !== 'string') {
           throw new McpError(
-            ErrorCode.InvalidParams, 
+            ErrorCode.InvalidParams,
             'A valid directory path must be provided'
           );
         }
@@ -318,10 +333,10 @@ class MarkdownDownloaderServer {
       // Create subdirectory
       if (request.params.name === 'create_subdirectory') {
         const subdirectoryName = request.params.arguments?.name;
-        
+
         if (!subdirectoryName || typeof subdirectoryName !== 'string') {
           throw new McpError(
-            ErrorCode.InvalidParams, 
+            ErrorCode.InvalidParams,
             'A valid subdirectory name must be provided'
           );
         }
@@ -329,7 +344,7 @@ class MarkdownDownloaderServer {
         try {
           const config = getConfig();
           const newSubdirectoryPath = path.join(config.downloadDirectory, subdirectoryName);
-          
+
           // Create the subdirectory
           await fs.ensureDir(newSubdirectoryPath);
 
