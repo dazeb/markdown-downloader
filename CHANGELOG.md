@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved environment variable handling using Node.js os module
 - Updated README with platform-specific configuration information
 
+### Security
+- Updated axios from 1.7.9 to 1.8.3 to fix CVE-2025-27152 (High severity)
+
 ## [1.0.0] - 2025-XX-XX
 
 ### Added
